@@ -35,10 +35,16 @@ public class DbHelper extends SQLiteOpenHelper {
                 + Constant.ORDER_NO + " INTEGER PRIMARY KEY," + Constant.ORDER_DATE + " TEXT,"
                 + Constant.ORDER_CUSTOMER_ID + " TEXT " + ")";
 
+        String CREATE_ORDER_LIST_TABLE = "CREATE TABLE " + Constant.ORDER_DETAILS_TABLE_NAME + "("
+                +Constant.ORDER_DETAILS_id + " INTEGER PRIMARY KEY," + Constant.ORDER_DETAILS_ORDER_NO
+                + " INTEGER ," + Constant.ORDER_DETAILS_PRODUCT_ID + " INTEGER," + Constant.ORDER_DETAILS_QUANTITY + " TEXT,"
+                + Constant.ORDER_DETAILS_TOTAL_AMOUNT + " INTEGER " + ")";
+
 
         db.execSQL(CREATE_PRODUCT_TABLE);
         db.execSQL(CREATE_CUSTOMER_TABLE);
         db.execSQL(CREATE_ORDER_TABLE);
+        db.execSQL(CREATE_ORDER_LIST_TABLE);
 
     }
 
