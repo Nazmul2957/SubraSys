@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.subrasys.Activity.ProductActivity;
 import com.example.subrasys.Database.DbHelper;
 import com.example.subrasys.ModelClass.Product;
 import com.example.subrasys.R;
@@ -66,8 +67,7 @@ public class Product_Adaptar extends BaseAdapter {
             public void onClick(View v) {
                 /*DbHelper dbHelper = new DbHelper(context);
                 dbHelper.updateproduct(products.get(position));*/
-                EditText editText = (EditText) context.findViewById(R.id.product_name);
-                Toast.makeText(context, editText.getText(), Toast.LENGTH_LONG).show();
+                ProductActivity.fun(products.get(position));
 
             }
         });

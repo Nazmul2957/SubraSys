@@ -174,9 +174,10 @@ public class DbHelper extends SQLiteOpenHelper {
     public boolean updateproduct(Product product) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        String update_query = " UPDATE " + Constant.PRODUCT_TABLE_NAME + " SET " + Constant.PRODUCT_NAME + " = " + product.getProduct_name() +
-                "," + Constant.PRODUCT_PRICE + " = " + product.getProduct_price() + " WHERE " + Constant.PRODUCT_id + " = " + product.getProduct_id();
-        db.rawQuery(update_query, null);
+        ContentValues cv = new ContentValues();
+        cv.put(Constant.PRODUCT_NAME,product.getProduct_name()); //These Fields should be your String values of actual column names
+        cv.put(Constant.PRODUCT_PRICE,product.getProduct_price()); //These Fields should be your String values of actual column names
+        db.update(Constant.PRODUCT_TABLE_NAME,cv,Constant.PRODUCT_id+"="+product.getProduct_id(),null);
         db.close();
         return true;
 
