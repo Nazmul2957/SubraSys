@@ -16,14 +16,14 @@
             android:id="@+id/customer_spinner"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#C1C1C1" />
+          />
 
         <Spinner
             android:id="@+id/product_spinner"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:background="#C1C1C1" />
+          />
 
         <TextView
             android:id="@+id/customer_name_set"
@@ -34,6 +34,7 @@
             android:hint="Customer Name"
             android:textAlignment="center"
             android:textSize="25sp"
+            android:background="#B5B2B2"
             tools:ignore="RtlCompat" />
 
         <LinearLayout

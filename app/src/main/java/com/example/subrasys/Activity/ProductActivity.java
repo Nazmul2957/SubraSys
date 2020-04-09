@@ -75,6 +75,8 @@ public class ProductActivity extends AppCompatActivity {
         product_list.setAdapter(adaptar);
 
     }
+
+
     public void update(){
         String productname = product_name.getText().toString();
         String productprice = product_price.getText().toString();

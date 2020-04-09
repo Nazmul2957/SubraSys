@@ -193,8 +193,6 @@ public class DbHelper extends SQLiteOpenHelper {
         db.update(Constant.CUSTOMER_TABLE_NAME,cv,Constant.CUSTOMER_id+"="+customer.getId(),null);
         db.close();
         return true;
-
-
     }
 
 }

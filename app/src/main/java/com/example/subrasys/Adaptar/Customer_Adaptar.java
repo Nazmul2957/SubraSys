@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.subrasys.Activity.CustomerActivity;
 import com.example.subrasys.Database.DbHelper;
 import com.example.subrasys.ModelClass.Customer;
 import com.example.subrasys.R;
@@ -54,7 +55,7 @@ public class Customer_Adaptar extends BaseAdapter {
         TextView textView = convertView.findViewById(R.id.sample_customer_name);
         TextView textview2 = convertView.findViewById(R.id.sample_customer_phn);
         ImageButton delete = convertView.findViewById(R.id.delete_customer);
-        ImageButton update= convertView.findViewById(R.id.customer_update);
+        ImageButton update= convertView.findViewById(R.id.edit_name);
 
         textView.setText(customer.get(position).getName());
         textview2.setText(customer.get(position).getPhn());
@@ -63,6 +64,7 @@ public class Customer_Adaptar extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
+                CustomerActivity.cus(customer.get(position));
             }
         });
 

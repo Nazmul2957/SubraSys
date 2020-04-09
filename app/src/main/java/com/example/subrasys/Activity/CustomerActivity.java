@@ -17,10 +17,12 @@ import com.example.subrasys.R;
 
 public class CustomerActivity extends AppCompatActivity {
 
-    EditText customer_name, customer_phn_no;
-    Button customer_save;
+
+    static EditText customer_name, customer_phn_no;
+    static Button customer_save,customer_update;
     ListView customer_list;
     DbHelper database;
+    static int cid_update=0;
 
 
     @Override
@@ -32,8 +34,20 @@ public class CustomerActivity extends AppCompatActivity {
         customer_phn_no = findViewById(R.id.customer_phn_no);
         customer_save = findViewById(R.id.customer_save);
         customer_list = findViewById(R.id.customer_list);
+        customer_update=findViewById(R.id.customer_update);
 
         show_customer();
+
+        customer_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                update();
+                show_customer();
+                customer_save.setEnabled(true);
+                customer_update.setEnabled(false);
+            }
+        });
+
         customer_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +79,30 @@ public class CustomerActivity extends AppCompatActivity {
         customer_list.setAdapter(customaradaptar);
 
     }
+    public void update(){
+        String customername = customer_name.getText().toString();
+        String customerphn = customer_phn_no.getText().toString();
 
+        if (customername.isEmpty() && customerphn.isEmpty()) {
+            Toast.makeText(this, "Enter Product", Toast.LENGTH_SHORT).show();
+        } else {
+            Customer customer = new Customer(cid_update,customername, customerphn);
+            database = new DbHelper(getApplicationContext());
+            database.updatecustomer(customer);
+            customer_name.setText("");
+            customer_phn_no.setText("");
+        }
+    }
+
+    ///call from customer adapter to set edittext data for update.
+    public static void cus(Customer customer){
+        customer_name.setText(customer.getName());
+        customer_phn_no.setText(customer.getPhn());
+        cid_update=customer.getId();
+        customer_update.setEnabled(true);
+        customer_save.setEnabled(false);
+
+
+    }
 
 }

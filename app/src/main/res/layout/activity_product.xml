@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="Product Name"
+            android:maxLines="1"
             android:textAlignment="center"
             tools:ignore="RtlCompat" />
 
@@ -29,6 +30,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
             android:hint="Product Price"
+            android:inputType="number"
             android:textAlignment="center"
             tools:ignore="RtlCompat" />
 
