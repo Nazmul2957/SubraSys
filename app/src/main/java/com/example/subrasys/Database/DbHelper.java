@@ -184,12 +184,19 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
-   /* public boolean updateCustomer(int id){
-        SQLiteDatabase db=this.getWritableDatabase();
-        String deleteCustomer="DELETE FROM "+Constant.CUSTOMER_TABLE_NAME+" WHERE "+Constant.CUSTOMER_id+ "="+String.valueOf(id);
-        Cursor cursor=db.rawQuery(deleteCustomer,null);
-        Log.e("delete",String.valueOf(cursor.getCount()));
+
+    public  boolean updatecustomer(Customer customer){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(Constant.CUSTOMER_NAME,customer.getName());
+        cv.put(Constant.CUSTOMER_PHN,customer.getPhn());
+        db.update(Constant.CUSTOMER_TABLE_NAME,cv,Constant.CUSTOMER_id+"="+customer.getId(),null);
         db.close();
         return true;
-    }*/
+
+
+
+
+    }
+
 }

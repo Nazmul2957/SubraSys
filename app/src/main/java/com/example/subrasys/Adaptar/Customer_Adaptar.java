@@ -54,9 +54,19 @@ public class Customer_Adaptar extends BaseAdapter {
         TextView textView = convertView.findViewById(R.id.sample_customer_name);
         TextView textview2 = convertView.findViewById(R.id.sample_customer_phn);
         ImageButton delete = convertView.findViewById(R.id.delete_customer);
+        ImageButton update= convertView.findViewById(R.id.customer_update);
 
         textView.setText(customer.get(position).getName());
         textview2.setText(customer.get(position).getPhn());
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +77,8 @@ public class Customer_Adaptar extends BaseAdapter {
 
             }
         });
+
+
 
 
         return convertView;
