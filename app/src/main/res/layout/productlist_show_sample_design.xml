@@ -61,18 +61,21 @@
             android:id="@+id/plus_product"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:clickable="true"
             android:src="@drawable/ic_add_black_24dp" />
 
         <ImageButton
             android:id="@+id/minus_product"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:clickable="true"
             android:src="@drawable/ic_remove_black_24dp" />
 
         <ImageButton
             android:id="@+id/delete_cart_product"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:clickable="true"
             android:src="@drawable/ic_delete_black_24dp" />
     </LinearLayout>
 

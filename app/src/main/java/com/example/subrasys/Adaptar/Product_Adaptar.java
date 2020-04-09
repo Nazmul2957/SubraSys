@@ -21,6 +21,7 @@ import java.util.List;
 public class Product_Adaptar extends BaseAdapter {
 
     List<Product> products;
+
     Context context;
     LayoutInflater layoutInflater;
 
@@ -28,6 +29,7 @@ public class Product_Adaptar extends BaseAdapter {
 
         this.context = context;
         this.products = products;
+
 
     }
 
