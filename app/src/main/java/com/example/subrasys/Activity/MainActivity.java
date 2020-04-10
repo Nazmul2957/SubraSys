@@ -11,7 +11,7 @@ import com.example.subrasys.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button product_add,customer_add,order_page;
+    Button product_add,customer_add,order_page,order_list_page;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         product_add=findViewById(R.id.product_add);
         customer_add=findViewById(R.id.customer_add);
         order_page=findViewById(R.id.order_page);
+        order_list_page=findViewById(R.id.order_list_page);
 
         product_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,5 +45,11 @@ public class MainActivity extends AppCompatActivity {
                startActivity(intent);
            }
        });
+        order_list_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,OrderListActivity.class));
+            }
+        });
     }
 }

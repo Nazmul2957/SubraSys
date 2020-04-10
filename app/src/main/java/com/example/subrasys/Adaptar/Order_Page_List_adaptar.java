@@ -18,21 +18,19 @@ public class Order_Page_List_adaptar extends BaseAdapter {
 
     Context context;
     LayoutInflater inflater;
-    List<Product> productslist;
-    List<Product> finallist;
+
     int quantity = 1;
 
 
 
     public Order_Page_List_adaptar(Context context, List<Product> productslist) {
         this.context = context;
-        this.productslist = productslist;
-        finallist= productslist;
+
     }
 
     @Override
     public int getCount() {
-        return productslist.size();
+        return OrderActivity.selected_products.size();
     }
 
     @Override
@@ -59,35 +57,41 @@ public class Order_Page_List_adaptar extends BaseAdapter {
         ImageButton productMinus = convertView.findViewById(R.id.minus_product);
         ImageButton DeleteProduct = convertView.findViewById(R.id.delete_cart_product);
 
-        productName.setText(productslist.get(position).getProduct_name());
-        productPrice.setText(productslist.get(position).getProduct_price());
-        productQuantity.setText(String.valueOf(1));
+        productName.setText(OrderActivity.selected_products.get(position).getProduct_name());
+        productPrice.setText(OrderActivity.selected_products.get(position).getProduct_price());
+
 
         productAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int a=finallist.get(position).getProduct_quantity();
+                int a=OrderActivity.selected_products.get(position).getProduct_quantity();
                 a++;
-               finallist.get(position).setProduct_quantity(a);
-                productQuantity.setText(String.valueOf(finallist.get(position).getProduct_quantity()));
+                OrderActivity.selected_products.get(position).setProduct_quantity(a);
+                OrderActivity.total_amount=OrderActivity.total_amount+(a*Integer.parseInt(OrderActivity.selected_products.get(position).getProduct_price()));
+                productQuantity.setText(String.valueOf(OrderActivity.selected_products.get(position).getProduct_quantity()));
+                OrderActivity.setTotalamount();
             }
         });
 
         productMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int a=finallist.get(position).getProduct_quantity();
-                a--;
-                finallist.get(position).setProduct_quantity(a);
-                productQuantity.setText(String.valueOf(finallist.get(position).getProduct_quantity()));
+                if(OrderActivity.selected_products.get(position).getProduct_quantity()>1) {
+                    int a = OrderActivity.selected_products.get(position).getProduct_quantity();
+                    a--;
+                    OrderActivity.selected_products.get(position).setProduct_quantity(a);
+                    OrderActivity.total_amount=OrderActivity.total_amount-(a*Integer.parseInt(OrderActivity.selected_products.get(position).getProduct_price()));
+                    productQuantity.setText(String.valueOf(OrderActivity.selected_products.get(position).getProduct_quantity()));
+                    OrderActivity.setTotalamount();
+                }
             }
         });
 
         DeleteProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OrderActivity.total_amount=OrderActivity.total_amount-Integer.parseInt(productslist.get(position).getProduct_price());
-                productslist.remove(position);
+                OrderActivity.total_amount=OrderActivity.total_amount-(Integer.parseInt(OrderActivity.selected_products.get(position).getProduct_price())*OrderActivity.selected_products.get(position).getProduct_quantity());
+                OrderActivity.selected_products.remove(position);
                 OrderActivity.setTotalamount();
                 notifyDataSetChanged();
             }
@@ -96,9 +100,7 @@ public class Order_Page_List_adaptar extends BaseAdapter {
 
         return convertView;
     }
-    public List<Product> getfinaldata(){
-        return finallist;
-    }
+
 
 
 }

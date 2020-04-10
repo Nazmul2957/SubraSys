@@ -31,11 +31,14 @@ public class OrderActivity extends AppCompatActivity {
     DatePicker date_picker;
     Button final_order_list, date_pic;
     ListView product_select_list;
-    List<Product> selected_products;
+    public static List<Product> selected_products;
     List<Product> productslist;
+    List<Customer> customers;
     int toggole=0;
     Order_Page_List_adaptar pro_adaptars;
     public static int total_amount = 0;
+    String customer_id;
+    long order_id=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,31 @@ public class OrderActivity extends AppCompatActivity {
         product_select_list = findViewById(R.id.product_select_list);
         selected_products = new ArrayList<Product>();
         productslist = new ArrayList<Product>();
+
+
+        final_order_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String date=date_show.getText().toString();
+                if(customer_id!=null&&date!="") {
+
+                    DbHelper dbHelper = new DbHelper(getApplicationContext());
+                    order_id=dbHelper.addOrder(customer_id,date);
+                    if(order_id>0){
+
+                        long detils_id=dbHelper.addOrderDetails(order_id,date,selected_products.size(),total_amount);
+                        Toast.makeText(OrderActivity.this, "succesfully insertet"+order_id+"-"+detils_id, Toast.LENGTH_LONG).show();
+                    }
+                }
+                else{
+                    Toast.makeText(OrderActivity.this, "please select customer", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+
+
          //calender---------------
 
         date_pic.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +115,7 @@ public class OrderActivity extends AppCompatActivity {
         customer_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                customer_id=String.valueOf(customers.get(position).getId());
                 customer_name_set.setText(a[position]);
             }
 
@@ -105,9 +134,8 @@ public class OrderActivity extends AppCompatActivity {
         product_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                /*selected_products.clear();*/
+
                 total_amount = total_amount + Integer.parseInt(productslist.get(position).getProduct_price());
-                selected_products = pro_adaptars.getfinaldata();
                 selected_products.add(productslist.get(position));
                 pro_adaptars.notifyDataSetChanged();
                 show_total_amount.setText(String.valueOf(total_amount));
@@ -127,7 +155,7 @@ public class OrderActivity extends AppCompatActivity {
 
     public String[] allCustomer() {
 
-        List<Customer> customers = new ArrayList<>();
+        customers = new ArrayList<>();
         DbHelper db = new DbHelper(getApplicationContext());
         customers = db.getCustomer();
         String[] customer = new String[customers.size()];

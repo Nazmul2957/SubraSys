@@ -10,6 +10,7 @@ import android.util.Log;
 
 
 import com.example.subrasys.ModelClass.Customer;
+import com.example.subrasys.ModelClass.OrderList;
 import com.example.subrasys.ModelClass.Product;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 + Constant.ORDER_CUSTOMER_ID + " TEXT " + ")";
 
         String CREATE_ORDER_LIST_TABLE = "CREATE TABLE " + Constant.ORDER_DETAILS_TABLE_NAME + "("
-                +Constant.ORDER_DETAILS_id + " INTEGER PRIMARY KEY," + Constant.ORDER_DETAILS_ORDER_NO
+                + Constant.ORDER_DETAILS_id + " INTEGER PRIMARY KEY," + Constant.ORDER_DETAILS_ORDER_NO
                 + " INTEGER ," + Constant.ORDER_DETAILS_PRODUCT_ID + " INTEGER," + Constant.ORDER_DETAILS_QUANTITY + " TEXT,"
                 + Constant.ORDER_DETAILS_TOTAL_AMOUNT + " INTEGER " + ")";
 
@@ -87,23 +88,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
-//    public boolean addordder() {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(Constant.ORDER_DATE, "nasim");
-//        contentValues.put(Constant.ORDER_CUSTOMER_ID, "01629668325");
-//
-//        if (db.insert(Constant.ORDER_TABLE_NAME, null, contentValues) > 0) {
-//            db.close();
-//            return true;
-//
-//        } else {
-//
-//            db.close();
-//            return false;
-//        }
-//
-//    }
 
     public List<Product> get_product() {
 
@@ -181,9 +165,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(Constant.PRODUCT_NAME,product.getProduct_name()); //These Fields should be your String values of actual column names
-        cv.put(Constant.PRODUCT_PRICE,product.getProduct_price()); //These Fields should be your String values of actual column names
-        db.update(Constant.PRODUCT_TABLE_NAME,cv,Constant.PRODUCT_id+"="+product.getProduct_id(),null);
+        cv.put(Constant.PRODUCT_NAME, product.getProduct_name()); //These Fields should be your String values of actual column names
+        cv.put(Constant.PRODUCT_PRICE, product.getProduct_price()); //These Fields should be your String values of actual column names
+        db.update(Constant.PRODUCT_TABLE_NAME, cv, Constant.PRODUCT_id + "=" + product.getProduct_id(), null);
         db.close();
         return true;
 
@@ -191,14 +175,95 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
 
-    public  boolean updatecustomer(Customer customer){
+    public boolean updatecustomer(Customer customer) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(Constant.CUSTOMER_NAME,customer.getName());
-        cv.put(Constant.CUSTOMER_PHN,customer.getPhn());
-        db.update(Constant.CUSTOMER_TABLE_NAME,cv,Constant.CUSTOMER_id+"="+customer.getId(),null);
+        cv.put(Constant.CUSTOMER_NAME, customer.getName());
+        cv.put(Constant.CUSTOMER_PHN, customer.getPhn());
+        db.update(Constant.CUSTOMER_TABLE_NAME, cv, Constant.CUSTOMER_id + "=" + customer.getId(), null);
         db.close();
         return true;
+    }
+
+    //order fucnctions------------------
+    public long addOrder(String customer_id, String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Constant.ORDER_CUSTOMER_ID, customer_id);
+        contentValues.put(Constant.ORDER_DATE, date);
+        long id = db.insert(Constant.ORDER_TABLE_NAME, null, contentValues);
+
+
+        db.close();
+        return id;
+
+    }
+
+    public long addOrderDetails(long order_no, String date, int quantity, int total_amount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Constant.ORDER_DETAILS_ORDER_NO, order_no);
+        contentValues.put(Constant.ORDER_DETAILS_PRODUCT_ID, date);
+        contentValues.put(Constant.ORDER_DETAILS_QUANTITY, quantity);
+        contentValues.put(Constant.ORDER_DETAILS_TOTAL_AMOUNT, total_amount);
+        long id = db.insert(Constant.ORDER_DETAILS_TABLE_NAME, null, contentValues);
+
+
+        db.close();
+        return id;
+
+    }
+
+
+    ///order details show final page
+    public List<OrderList> getOrderdetails() {
+
+        int order_no = 0;
+        Cursor cursorCustomer = null;
+        Cursor cursorOrder = null;
+        Cursor customcurosr = null;
+        List<OrderList> orderLists = new ArrayList<>();
+        String customer_query = "SELECT * FROM " + Constant.ORDER_DETAILS_TABLE_NAME + ";";
+        SQLiteDatabase db = this.getReadableDatabase();
+        cursorCustomer = db.rawQuery(customer_query, null);
+
+        if (cursorCustomer != null) {
+            if (cursorCustomer.moveToFirst()) {
+                do {
+                    order_no = cursorCustomer.getInt(cursorCustomer.getColumnIndex(Constant.ORDER_DETAILS_id));
+                    int total_amount = cursorCustomer.getInt(cursorCustomer.getColumnIndex(Constant.ORDER_DETAILS_TOTAL_AMOUNT));
+                    order_no = cursorCustomer.getInt(cursorCustomer.getColumnIndex(Constant.ORDER_DETAILS_ORDER_NO));
+
+
+                    String order_query = " SELECT * FROM " + Constant.ORDER_TABLE_NAME + " WHERE " + Constant.ORDER_NO + " = " + order_no;
+                    cursorOrder = db.rawQuery(order_query, null);
+
+                    cursorOrder.moveToFirst();
+                    String date = cursorOrder.getString(cursorOrder.getColumnIndex(Constant.ORDER_DATE));
+                    String customar_id = cursorOrder.getString(cursorOrder.getColumnIndex(Constant.ORDER_CUSTOMER_ID));
+
+
+                    String customer_name = " SELECT * FROM " + Constant.CUSTOMER_TABLE_NAME + " WHERE " + Constant.CUSTOMER_id + " = " + customar_id;
+                    customcurosr = db.rawQuery(customer_name, null);
+                    customcurosr.moveToFirst();
+                    String customer_namer = customcurosr.getString(customcurosr.getColumnIndex(Constant.CUSTOMER_NAME));
+
+
+                    OrderList orderList = new OrderList(order_no, total_amount, customer_namer, date);
+                    orderLists.add(orderList);
+
+
+                } while (cursorCustomer.moveToNext());
+                cursorCustomer.close();
+                db.close();
+                return orderLists;
+            }
+        }
+
+
+        db.close();
+        return orderLists;
+
     }
 
 }
