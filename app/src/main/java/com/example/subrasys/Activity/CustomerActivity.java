@@ -19,10 +19,10 @@ public class CustomerActivity extends AppCompatActivity {
 
 
     static EditText customer_name, customer_phn_no;
-    static Button customer_save,customer_update;
+    static Button customer_save, customer_update;
     ListView customer_list;
     DbHelper database;
-    static int cid_update=0;
+    static int cid_update = 0;
 
 
     @Override
@@ -34,7 +34,7 @@ public class CustomerActivity extends AppCompatActivity {
         customer_phn_no = findViewById(R.id.customer_phn_no);
         customer_save = findViewById(R.id.customer_save);
         customer_list = findViewById(R.id.customer_list);
-        customer_update=findViewById(R.id.customer_update);
+        customer_update = findViewById(R.id.customer_update);
 
         show_customer();
 
@@ -75,18 +75,19 @@ public class CustomerActivity extends AppCompatActivity {
 
     public void show_customer() {
         DbHelper database = new DbHelper(getApplicationContext());
-        Customer_Adaptar customaradaptar = new Customer_Adaptar(database.getCustomer(),getApplicationContext(),getIntent());
+        Customer_Adaptar customaradaptar = new Customer_Adaptar(database.getCustomer(), getApplicationContext(), getIntent());
         customer_list.setAdapter(customaradaptar);
 
     }
-    public void update(){
+
+    public void update() {
         String customername = customer_name.getText().toString();
         String customerphn = customer_phn_no.getText().toString();
 
         if (customername.isEmpty() && customerphn.isEmpty()) {
             Toast.makeText(this, "Enter Product", Toast.LENGTH_SHORT).show();
         } else {
-            Customer customer = new Customer(cid_update,customername, customerphn);
+            Customer customer = new Customer(cid_update, customername, customerphn);
             database = new DbHelper(getApplicationContext());
             database.updatecustomer(customer);
             customer_name.setText("");
@@ -95,10 +96,10 @@ public class CustomerActivity extends AppCompatActivity {
     }
 
     ///call from customer adapter to set edittext data for update.
-    public static void cus(Customer customer){
+    public static void cus(Customer customer) {
         customer_name.setText(customer.getName());
         customer_phn_no.setText(customer.getPhn());
-        cid_update=customer.getId();
+        cid_update = customer.getId();
         customer_update.setEnabled(true);
         customer_save.setEnabled(false);
 

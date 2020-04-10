@@ -34,11 +34,11 @@ public class OrderActivity extends AppCompatActivity {
     public static List<Product> selected_products;
     List<Product> productslist;
     List<Customer> customers;
-    int toggole=0;
+    int toggole = 0;
     Order_Page_List_adaptar pro_adaptars;
     public static int total_amount = 0;
     String customer_id;
-    long order_id=0;
+    long order_id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class OrderActivity extends AppCompatActivity {
         date_show = findViewById(R.id.date_show);
         final_order_list = findViewById(R.id.final_order_list);
         date_pic = findViewById(R.id.date_pic);
-        date_picker=findViewById(R.id.date_picker);
+        date_picker = findViewById(R.id.date_picker);
         product_select_list = findViewById(R.id.product_select_list);
         selected_products = new ArrayList<Product>();
         productslist = new ArrayList<Product>();
@@ -60,44 +60,41 @@ public class OrderActivity extends AppCompatActivity {
         final_order_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String date=date_show.getText().toString();
-                if(customer_id!=null&&date!="") {
+                String date = date_show.getText().toString();
+                if (customer_id != null && date != "") {
 
                     DbHelper dbHelper = new DbHelper(getApplicationContext());
-                    order_id=dbHelper.addOrder(customer_id,date);
-                    if(order_id>0){
+                    order_id = dbHelper.addOrder(customer_id, date);
+                    if (order_id > 0) {
 
-                        long detils_id=dbHelper.addOrderDetails(order_id,date,selected_products.size(),total_amount);
-                        Toast.makeText(OrderActivity.this, "succesfully insertet"+order_id+"-"+detils_id, Toast.LENGTH_LONG).show();
+                        long detils_id = dbHelper.addOrderDetails(order_id, date, selected_products.size(), total_amount);
+                        Toast.makeText(OrderActivity.this, "succesfully insertet" + order_id + "-" + detils_id, Toast.LENGTH_LONG).show();
                     }
-                }
-                else{
+                } else {
                     Toast.makeText(OrderActivity.this, "please select customer", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
 
-
-
-         //calender---------------
+        //calender---------------
 
         date_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(toggole==0){
+                if (toggole == 0) {
                     date_picker.setVisibility(View.VISIBLE);
-                    toggole=1;
-                }else{
+                    toggole = 1;
+                } else {
                     date_picker.setVisibility(View.GONE);
-                    toggole=0;
+                    toggole = 0;
                 }
 
-                Calendar calendar =Calendar.getInstance();
+                Calendar calendar = Calendar.getInstance();
                 date_picker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        date_show.setText(dayOfMonth+"-"+monthOfYear+"-"+year);
+                        date_show.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
                     }
                 });
             }
@@ -115,7 +112,7 @@ public class OrderActivity extends AppCompatActivity {
         customer_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                customer_id=String.valueOf(customers.get(position).getId());
+                customer_id = String.valueOf(customers.get(position).getId());
                 customer_name_set.setText(a[position]);
             }
 

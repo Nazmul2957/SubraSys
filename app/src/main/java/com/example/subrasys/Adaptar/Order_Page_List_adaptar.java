@@ -22,7 +22,6 @@ public class Order_Page_List_adaptar extends BaseAdapter {
     int quantity = 1;
 
 
-
     public Order_Page_List_adaptar(Context context, List<Product> productslist) {
         this.context = context;
 
@@ -64,10 +63,10 @@ public class Order_Page_List_adaptar extends BaseAdapter {
         productAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int a=OrderActivity.selected_products.get(position).getProduct_quantity();
+                int a = OrderActivity.selected_products.get(position).getProduct_quantity();
                 a++;
                 OrderActivity.selected_products.get(position).setProduct_quantity(a);
-                OrderActivity.total_amount=OrderActivity.total_amount+(a*Integer.parseInt(OrderActivity.selected_products.get(position).getProduct_price()));
+                OrderActivity.total_amount = OrderActivity.total_amount + (a * Integer.parseInt(OrderActivity.selected_products.get(position).getProduct_price()));
                 productQuantity.setText(String.valueOf(OrderActivity.selected_products.get(position).getProduct_quantity()));
                 OrderActivity.setTotalamount();
             }
@@ -76,11 +75,11 @@ public class Order_Page_List_adaptar extends BaseAdapter {
         productMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(OrderActivity.selected_products.get(position).getProduct_quantity()>1) {
+                if (OrderActivity.selected_products.get(position).getProduct_quantity() > 1) {
                     int a = OrderActivity.selected_products.get(position).getProduct_quantity();
                     a--;
                     OrderActivity.selected_products.get(position).setProduct_quantity(a);
-                    OrderActivity.total_amount=OrderActivity.total_amount-(a*Integer.parseInt(OrderActivity.selected_products.get(position).getProduct_price()));
+                    OrderActivity.total_amount = OrderActivity.total_amount - (a * Integer.parseInt(OrderActivity.selected_products.get(position).getProduct_price()));
                     productQuantity.setText(String.valueOf(OrderActivity.selected_products.get(position).getProduct_quantity()));
                     OrderActivity.setTotalamount();
                 }
@@ -90,7 +89,7 @@ public class Order_Page_List_adaptar extends BaseAdapter {
         DeleteProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OrderActivity.total_amount=OrderActivity.total_amount-(Integer.parseInt(OrderActivity.selected_products.get(position).getProduct_price())*OrderActivity.selected_products.get(position).getProduct_quantity());
+                OrderActivity.total_amount = OrderActivity.total_amount - (Integer.parseInt(OrderActivity.selected_products.get(position).getProduct_price()) * OrderActivity.selected_products.get(position).getProduct_quantity());
                 OrderActivity.selected_products.remove(position);
                 OrderActivity.setTotalamount();
                 notifyDataSetChanged();
@@ -100,7 +99,6 @@ public class Order_Page_List_adaptar extends BaseAdapter {
 
         return convertView;
     }
-
 
 
 }

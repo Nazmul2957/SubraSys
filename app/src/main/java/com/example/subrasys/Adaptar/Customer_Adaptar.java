@@ -24,10 +24,10 @@ public class Customer_Adaptar extends BaseAdapter {
     Intent intent;
     LayoutInflater layoutInflater;
 
-    public Customer_Adaptar(List<Customer> customer, Context context,Intent intent) {
+    public Customer_Adaptar(List<Customer> customer, Context context, Intent intent) {
         this.customer = customer;
         this.context = context;
-        this.intent=intent;
+        this.intent = intent;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Customer_Adaptar extends BaseAdapter {
         TextView textView = convertView.findViewById(R.id.sample_customer_name);
         TextView textview2 = convertView.findViewById(R.id.sample_customer_phn);
         ImageButton delete = convertView.findViewById(R.id.delete_customer);
-        ImageButton update= convertView.findViewById(R.id.edit_name);
+        ImageButton update = convertView.findViewById(R.id.edit_name);
 
         textView.setText(customer.get(position).getName());
         textview2.setText(customer.get(position).getPhn());
@@ -72,15 +72,13 @@ public class Customer_Adaptar extends BaseAdapter {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DbHelper dbHelper=new DbHelper(context);
+                DbHelper dbHelper = new DbHelper(context);
                 dbHelper.deleteCustomer(customer.get(position).getId());
                 customer.remove(position);
                 notifyDataSetChanged();
 
             }
         });
-
-
 
 
         return convertView;

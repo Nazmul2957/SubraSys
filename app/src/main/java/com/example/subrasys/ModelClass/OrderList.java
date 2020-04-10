@@ -12,15 +12,17 @@ public class OrderList {
         this.date = date;
         this.total_amount = total_amount;
     }
-    public OrderList(int orderno,int total_amount) {
+
+    public OrderList(int orderno, int total_amount) {
         this.orderno = orderno;
         this.total_amount = total_amount;
     }
-    public OrderList(int orderno,int total_amount,String customar_name,   String date) {
+
+    public OrderList(int orderno, int total_amount, String customar_name, String date) {
         this.orderno = orderno;
         this.total_amount = total_amount;
-        this.customar_name=customar_name;
-        this.date=date;
+        this.customar_name = customar_name;
+        this.date = date;
     }
 
     public int getOrderno() {

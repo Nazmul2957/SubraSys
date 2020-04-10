@@ -20,7 +20,7 @@ public class Order_list_show_custom_adaptar extends BaseAdapter {
 
     public Order_list_show_custom_adaptar(Context context, List<OrderList> orderLists) {
         this.context = context;
-        this.orderLists=orderLists;
+        this.orderLists = orderLists;
     }
 
     @Override
@@ -41,15 +41,15 @@ public class Order_list_show_custom_adaptar extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if (convertView==null){
+        if (convertView == null) {
 
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.order_list_sample_design, parent, false);
         }
-        TextView orderno=convertView.findViewById(R.id.final_order_no);
-        TextView total=convertView.findViewById(R.id.final_total_amount);
-        TextView dateshow=convertView.findViewById(R.id.final_date);
-        TextView customer_name=convertView.findViewById(R.id.final_customer_name);
+        TextView orderno = convertView.findViewById(R.id.final_order_no);
+        TextView total = convertView.findViewById(R.id.final_total_amount);
+        TextView dateshow = convertView.findViewById(R.id.final_date);
+        TextView customer_name = convertView.findViewById(R.id.final_customer_name);
 
         orderno.setText(String.valueOf(orderLists.get(position).getOrderno()));
         total.setText(String.valueOf(orderLists.get(position).getTotal_amount()));

@@ -18,7 +18,7 @@ public class Constant {
 
     //ORDER TABLE
     public static final String ORDER_TABLE_NAME = "orderc";
-    public static final String ORDER_NO= "no";
+    public static final String ORDER_NO = "no";
     public static final String ORDER_DATE = "date";
     public static final String ORDER_CUSTOMER_ID = "serial";
 
@@ -31,7 +31,6 @@ public class Constant {
     public static final String ORDER_DETAILS_PRODUCT_ID = "product_id";
     public static final String ORDER_DETAILS_QUANTITY = "order_quantity";
     public static final String ORDER_DETAILS_TOTAL_AMOUNT = "total_amount";
-
 
 
 }

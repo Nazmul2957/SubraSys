@@ -30,7 +30,6 @@ public class Product_Adaptar extends BaseAdapter {
         this.context = context;
         this.products = products;
 
-
     }
 
     @Override
@@ -77,7 +76,7 @@ public class Product_Adaptar extends BaseAdapter {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DbHelper dbHelper=new DbHelper(context);
+                DbHelper dbHelper = new DbHelper(context);
                 dbHelper.deleteproduct(products.get(position).getProduct_id());
                 products.remove(position);
                 notifyDataSetChanged();
